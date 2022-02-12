@@ -1,0 +1,30 @@
+{
+  "name": "nodejs_huebridge-mirror-api",
+  "version": "1.0.0",
+  "description": "Mirror hue bridge values to external source to offload bridge requests",
+  "main": "NodeJS_HueBridge-Mirror-API.js",
+  "dependencies": {
+    "fastify": "^3.15.1",
+    "node-hue-api": "^5.0.0-beta.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node NodeJS_HueBridge-Mirror-API.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannyvanlierop/NodeJS_HueBridge-Mirror-API.git"
+  },
+  "keywords": [
+    "nodejs",
+    "hue",
+    "bridge",
+    "clone"
+  ],
+  "author": "Danny van Lierop",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dannyvanlierop/NodeJS_HueBridge-Mirror-API/issues"
+  },
+  "homepage": "https://github.com/dannyvanlierop/NodeJS_HueBridge-Mirror-API#readme"
+}
