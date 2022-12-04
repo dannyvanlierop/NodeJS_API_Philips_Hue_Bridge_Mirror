@@ -1,6 +1,5 @@
 # NodeJS_HueBridge-Mirror-API
-Mirror hue bridge values to an external source to offload bridge requests or make them available to other networks.<br>
-
+Mirror hue bridge values to external source to offload bridge requests<br>
 
 &nbsp;<br>
 [
@@ -44,24 +43,32 @@ Mirror hue bridge values to an external source to offload bridge requests or mak
 ## Configure:
 <hr>
 
-Create a file named `config.json` (in the the parent directory from the script directory).
-Add contents like below and adjust it to your needs.
+Create a file named `.config.js` (in the the src directory). Add contents like below and adjust it to your needs.
 ```
+module.exports = function()
 {
-	"bridgeUser" : "BRIDGE_USERNAME",
-	"bridgeIP" : "10.0.0.99",
-	"bridgeFetchInterval" : 80,
-	"bridgeFetchIntervalMin" : 5,
-	"bridgeFetchIntervalMax" : 3000,
-	"bridgeFetchIntervalIncreaseInfo" : "slow down fetching by, ms = (fetch cycles no updates found * bridgeFetchIntervalIncrease)",
-	"bridgeFetchIntervalIncrease" : 2,
-	"bridgeFetchIntervalDecreaseInfo" : "speed up fetching by, ms = (updates found in last fetch * bridgeFetchIntervalDecrease)",
-	"bridgeFetchIntervalDecrease" : 10,
-	"fastifyIPListenInfo" : "127.0.0.1(only listen on local interface),192.168.1.1(only listen on one interface),0.0.0.0(listen on all interfaces)",
-	"fastifyIPListen" : "0.0.0.0",
-	"fastifyLogger" : "true",
-	"fastifyPort" : "80"
-}
+    this.config = {};
+
+    config.Hue = {};
+
+    config.Hue.Bridge = {};
+    config.Hue.Bridge.User = "HUE_BRIDGE_USERNAME";
+    config.Hue.Bridge.IP   = "HUE_BRIDGE_IP";
+
+    config.Hue.Bridge.Lights = {};
+    config.Hue.Bridge.Lights.msIntervalCur = 1000;  /** hue lights. interval between fetching updates**/
+
+    config.Hue.Bridge.Sensors = {};
+    config.Hue.Bridge.Sensors.msIntervalCur = 1000; /** hue sensors, interval between fetching updates**/
+
+    config.Fastify = {};
+    config.Fastify.Logger = false;                  /** fastify debug **/
+    config.Fastify.Port   = 80;                     /** fastify http-server port **/
+    config.Fastify.IP     = '127.0.0.1';            /** fastify hostip, 127.0.0.1 = (only localhost ipv4), 
+                                                                          0.0.0.0 = (all interfaces ipv4), 
+                                                                        localhost = (localhost ipv4 and ipv6 ), 
+                                                                           hostip = (interface ipv4 or ipv6 ) **/
+};
 ```
 &nbsp;<br>
 ## Run:
@@ -69,7 +76,7 @@ Add contents like below and adjust it to your needs.
 
 Run this file from your favorite shell
 ```
-node NodeJS_HueBridge-Mirror-API.js
+node App.js
 ```
 
 &nbsp;<br>
@@ -79,11 +86,19 @@ node NodeJS_HueBridge-Mirror-API.js
 Fetch light values from your new source like you would from the hue bridge.
 
 ```
-One light example:  http://HOST_IP/api/BRIDGE_USERNAME/lights/1/
+One light example:  http://127.0.0.1/api/BRIDGE_USERNAME/lights/1/
 ```
 
 ```
-All lights example:  http://HOST_IP/api/BRIDGE_USERNAME/lights/
+All lights example:  http://127.0.0.1/api/BRIDGE_USERNAME/lights/
+```
+
+```
+One sensor example:  http://127.0.0.1/api/BRIDGE_USERNAME/sensors/1/
+```
+
+```
+All sensors example:  http://127.0.0.1/api/BRIDGE_USERNAME/sensors/
 ```
 
 &nbsp;<br>
